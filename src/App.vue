@@ -26,13 +26,12 @@
                   router-link.navbar-link(
                     :to="`${link.url}`"
                   ) {{ link.title }}
-    .content-wraper
-      router-view
+    router-view
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       menuShow: false,
       linkMenu: [
