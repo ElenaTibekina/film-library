@@ -47,32 +47,7 @@
                 .ui-tag__wrapper
                     .ui-tag
                         span.tag-title Dogs
-                        span.button-close
-        section
-            .container
-                .task-list
-                    .task-item(
-                        v-for="task in tasks"
-                        :key="task.id"
-                        :class="{ completed: task.completed }"
-                    )
-                        .ui-card.ui-card--shadow
-                            .task-item__info
-                                .task-item__main-info
-                                    span.ui-label.ui-label--light {{ task.whatWhatch }}
-                                    span Total Time:
-                                span.button-close
-                            .task-item__content
-                                .task-item__header
-                                    .ui-checkbox-wrapper
-                                        input.ui-checkbox(
-                                            type='checkbox'
-                                            v-model="task.completed"
-                                        )
-                                    span.ui-title-3 {{ task.title }}
-                                .task-item__body
-                                    p.ui-text-regular {{ task.description }}
-            
+                        span.button-close        
 </template>
 <script>
 export default {
@@ -81,25 +56,7 @@ export default {
             taskTitle: '',
             taskDescription: '',
             whatWhatch: 'Film',
-            taskId: 3,
-            tasks: [
-                {
-                    'id': 1,
-                    'title': 'GrowthBusters: Hooked on Grouth',
-                    'description': 'I directed this documentary chalinging lalalal lalalalal lalalajhbcbjhj lskksjshhshsh ksksjhshj ksksjjsj hfhjhd hdsh bbbdsgdgsjgdj gdgdggds bsbsgg bsbsb',
-                    'whatWhatch': 'film',
-                    'completed': false,
-                    'editing': false
-                },
-                {
-                    'id': 2,
-                    'title': 'Game of Thrones',
-                    'description': 'The best TV-show',
-                    'whatWhatch': 'TV-show',
-                    'completed': false,
-                    'editing': false
-                }
-            ]
+            taskId: 3
         }
     }, 
     methods: {
@@ -134,28 +91,4 @@ export default {
         margin-right 20px
         &:last-child
             margin-right 0
-.task-item
-    margin-bottom 20px
-    &:last-child
-        margin-bottom 0
-
-.ui-label
-    margin-right 8px
-
-.task-item__info
-    display flex
-    align-items center
-    justify-content space-between
-    margin-bottom 20px
-    .button-close
-        width 20px
-        height @width
-.task-item__header
-    display flex
-    align-items center
-    margin-bottom 18px
-    .ui-checkbox-wrapper
-        margin-right 8px
-    .ui-title-3
-        margin-bottom 0
 </style>
