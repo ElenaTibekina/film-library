@@ -78,10 +78,17 @@
                         p {{ serialTime }}
 
                 .tag-list
-                .ui-tag__wrapper
-                    .ui-tag
-                        span.tag-title Dogs
-                        span.button-close        
+                    .ui-tag__wrapper(
+                        v-for="tag in tags"
+                        :key="tag.title"
+                    )
+                        .ui-tag(
+                            @click="addTagUsed(tag)"
+                            :class="{active: tag.use}"
+                        )
+                            span.tag-title {{ tag.title }}
+                            span.button-close    
+                    p {{ tagsUsed }}    
 </template>
 <script>
 export default {
@@ -99,7 +106,24 @@ export default {
             // Serial
             serialSeason: 1,
             serialSeries: 11,
-            serialSeriesMinutes: 40
+            serialSeriesMinutes: 40,
+
+            // Tags
+            tagsUsed: [],
+            tags: [
+                {
+                    title: 'Comedy',
+                    use: false
+                },
+                {
+                    title: 'Westerns',
+                    use: false
+                },
+                {
+                    title: 'Adventure',
+                    use: false
+                }
+            ]
         }
     }, 
     methods: {
@@ -129,6 +153,16 @@ export default {
             this.taskTitle = ''
             this.taskDescription = ''
         },
+        addTagUsed (tag) {
+            tag.use = !tag.use
+            if (tag.use) {
+                this.tagsUsed.push(
+                    tag.title
+                )
+            } else {
+                this.tagsUsed.splice(tag.title, 1)
+            }
+        },
         getHoursAndMinutes (minutes) {
             let hours = Math.trunc(minutes/60)
             let min = minutes % 60
@@ -156,6 +190,8 @@ export default {
     margin-bottom 20px
     .what-watch--radio
         margin-right 12px
+    input
+        margin-bottom 20px
     label
         margin-right 20px
         margin-bottom 0
@@ -166,11 +202,33 @@ export default {
     .total-time
         margin-bottom 20px
 
-    .total-title
+    .time-title
         display block
         margin-bottom 6px
 
     .time-input
         max-width 80px
         margin-right 10px
+    
+    // Tags
+    .tag-list
+        margin-bottom 20px
+
+    .ui-tag__wrapper
+        margin-right 18px
+        margin-bottom 10px
+        &:last-child
+            margin-right 0
+
+    .ui-tag
+        .button-close
+            &.active
+                transform: rotate(45deg)
+        &.used
+            background-color #444ce0
+            color #fff
+            .button-close
+                &:before,
+                &:after
+                    background-color #fff
 </style>
