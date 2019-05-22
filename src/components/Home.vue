@@ -184,27 +184,28 @@ export default {
 
 <style lang="stylus" scoped>
 // Options
-.option-list
-    display flex
-    align-items center
-    margin-bottom 20px
-    .what-watch--radio
-        margin-right 12px
-    input
+    .option-list
+        display flex
+        align-items center
         margin-bottom 20px
-    label
-        margin-right 20px
-        margin-bottom 0
-        &:last-child
-            margin-right 0
-
+        .what-watch--radio
+            margin-right 12px
+        input
+            margin-bottom 0
+        label
+            margin-right 20px
+            margin-bottom 0
+            &:last-child
+                margin-right 0
     // Total time
     .total-time
         margin-bottom 20px
-
     .time-title
         display block
         margin-bottom 6px
+    .time-input
+        max-width 80px
+        margin-right 10px
 
     .time-input
         max-width 80px
@@ -231,4 +232,5 @@ export default {
                 &:before,
                 &:after
                     background-color #fff
+    
 </style>
