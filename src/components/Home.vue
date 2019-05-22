@@ -77,6 +77,32 @@
 
                         p {{ serialTime }}
 
+                // TAG LIST
+                // Add New Tag
+                .tag-list.tag-list--add
+                    .ui-tag__wrapper(
+                        @click="tagMenuShow = !tagMenuShow"
+                    )
+                        .ui-tag
+                            span.tag-title Add New
+                            span.button-close(
+                                :class="{ active: !tagMenuShow }"
+                            )
+
+                // Show Input
+                .tag-list.tag-list--menu(
+                    v-if="tagMenuShow"
+                )
+                    input.tag-add--input(
+                        type="text"
+                        placeholder="New tag"
+                        v-model="tagTitle"
+                        @keyup.enter="newTag"
+                    )
+                    .button.button-default(
+                        @click="newTag"
+                    ) Send
+                // All Tags
                 .tag-list
                     .ui-tag__wrapper(
                         v-for="tag in tags"
@@ -84,11 +110,16 @@
                     )
                         .ui-tag(
                             @click="addTagUsed(tag)"
-                            :class="{active: tag.use}"
+                            :class="{used: tag.use}"
                         )
                             span.tag-title {{ tag.title }}
                             span.button-close    
-                    p {{ tagsUsed }}    
+                    p {{ tagsUsed }}
+
+                    .button-list
+                        .button.button--round.button-primary(
+                            @click="newTask"
+                        ) Send
 </template>
 <script>
 export default {
@@ -109,6 +140,8 @@ export default {
             serialSeriesMinutes: 40,
 
             // Tags
+            tagTitle: '',
+            tagMenuShow: false,
             tagsUsed: [],
             tags: [
                 {
@@ -127,6 +160,18 @@ export default {
         }
     }, 
     methods: {
+        newTag () {
+            if (this.tagTitle === '') {
+                return
+            }
+            this.tags.push({
+                title: this.tagTitle,
+                used: false
+            })
+            //const tag = {
+            //    title: this.tagTitle,
+            //}
+        },
         newTask () {
             if(this.taskTitle === '') {
                 return
@@ -143,6 +188,7 @@ export default {
                 description: this.taskDescription,
                 whatWhatch: this.whatWhatch,
                 time,
+                tagsUsed: this.tags,
                 completed: false,
                 editing: false
             }
@@ -152,6 +198,7 @@ export default {
             this.taskId += 1
             this.taskTitle = ''
             this.taskDescription = ''
+            this.tagsUsed = []
         },
         addTagUsed (tag) {
             tag.use = !tag.use
@@ -226,11 +273,34 @@ export default {
             &.active
                 transform: rotate(45deg)
         &.used
-            background-color #444ce0
+            background-color: #444ce0
             color #fff
             .button-close
                 &:before,
                 &:after
                     background-color #fff
-    
+    // Tag Menu Show
+    .tag-list--menu
+        display flex
+        justify-content space-between
+        align-items center
+    // New Tag Input
+    .tag-add--input
+        margin-bottom 0
+        margin-right 10px
+        height 42px
+    // Total Time
+    .total-time
+        p
+            margin-bottom 6px
+        span
+            margin-right 16px
+        .task-input
+            max-width 80px
+            margin-bottom 28px
+            margin-right 10px
+        
+    .button-list
+            display flex
+            justify-content flex-end
 </style>
