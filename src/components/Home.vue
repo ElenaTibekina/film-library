@@ -128,7 +128,6 @@ export default {
             taskTitle: '',
             taskDescription: '',
             whatWhatch: 'Film',
-            taskId: 3,
 
             // Total time
             // Film
@@ -183,19 +182,18 @@ export default {
                 time = this.serialTime
             }
             const task = {
-                id: this.taskId,
                 title: this.taskTitle,
                 description: this.taskDescription,
                 whatWhatch: this.whatWhatch,
                 time,
-                tagsUsed: this.tags,
+                tags: this.tags,
                 completed: false,
                 editing: false
             }
+            this.$store.dispatch('newTask', task)
             console.log(task)
 
             // Reset
-            this.taskId += 1
             this.taskTitle = ''
             this.taskDescription = ''
             this.tagsUsed = []
@@ -203,9 +201,9 @@ export default {
         addTagUsed (tag) {
             tag.use = !tag.use
             if (tag.use) {
-                this.tagsUsed.push(
-                    tag.title
-                )
+                this.tagsUsed.push({
+                    title: tag.title
+                })
             } else {
                 this.tagsUsed.splice(tag.title, 1)
             }
