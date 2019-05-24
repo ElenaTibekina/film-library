@@ -35,7 +35,7 @@
                         for="radioTV"
                     ) TV-Show
 
-                // TOTAL TIME    
+                // TOTAL TIME
                 .total-time
 
                     // Film Time
@@ -55,7 +55,7 @@
 
                         p {{ filmTime }}
 
-                    // Serial Time    
+                    // Serial Time
                     .total-time__TV(
                         v-if="whatWhatch === 'TV-Show'"
                     )
@@ -113,7 +113,7 @@
                             :class="{used: tag.use}"
                         )
                             span.tag-title {{ tag.title }}
-                            span.button-close    
+                            span.button-close
                     p {{ tagsUsed }}
 
                     .button-list
@@ -123,173 +123,168 @@
 </template>
 <script>
 export default {
-    data() {
-        return {
-            taskTitle: '',
-            taskDescription: '',
-            whatWhatch: 'Film',
+  data () {
+    return {
+      taskTitle: '',
+      taskDescription: '',
+      whatWhatch: 'Film',
 
-            // Total time
-            // Film
-            filmHours: 1,
-            filmMinutes: 30,
-            // Serial
-            serialSeason: 1,
-            serialSeries: 11,
-            serialSeriesMinutes: 40,
+      // Total time
+      // Film
+      filmHours: 1,
+      filmMinutes: 30,
+      // Serial
+      serialSeason: 1,
+      serialSeries: 11,
+      serialSeriesMinutes: 40,
 
-            // Tags
-            tagTitle: '',
-            tagMenuShow: false,
-            tagsUsed: []
-        }
-    }, 
-    methods: {
-        newTag () {
-            if (this.tagTitle === '') {
-                return
-            }
-            const tag = {
-                title: this.tagTitle,
-                use: false
-            }
-            this.$store.dispatch('newTag', tag)
-        },
-        newTask () {
-            if(this.taskTitle === '') {
-                return
-            }
-            let time
-            if (this.whatWhatch === 'Film') {
-                time = this.filmTime
-            } else {
-                time = this.serialTime
-            }
-            const task = {
-                title: this.taskTitle,
-                description: this.taskDescription,
-                whatWhatch: this.whatWhatch,
-                time,
-                tags: this.tags,
-                completed: false,
-                editing: false
-            }
-            this.$store.dispatch('newTask', task)
-            console.log(task)
-
-            // Reset
-            this.taskTitle = ''
-            this.taskDescription = ''
-            this.tagsUsed = []
-
-            for (let i = 0; i < this.tags.length; i++) {
-                this.tags[i].use = false
-            }
-        },
-        addTagUsed (tag) {
-            tag.use = !tag.use
-            if (tag.use) {
-                this.tagsUsed.push({
-                    title: tag.title
-                })
-            } else {
-                this.tagsUsed.splice(tag.title, 1)
-            }
-        },
-        getHoursAndMinutes (minutes) {
-            let hours = Math.trunc(minutes/60)
-            let min = minutes % 60
-            return hours + ' Hours ' + min + ' Minutes'
-        }
+      // Tags
+      tagTitle: '',
+      tagMenuShow: false,
+      tagsUsed: []
+    }
+  },
+  methods: {
+    newTag () {
+      if (this.tagTitle === '') {
+        return
+      }
+      const tag = {
+        title: this.tagTitle,
+        use: false
+      }
+      this.$store.dispatch('newTag', tag)
     },
-    computed: {
-        tags () {
-            return this.$store.getters.tags
-        },
-        filmTime () {
-            let min = (this.filmHours * 60) + (this.filmMinutes * 1)
-            return this.getHoursAndMinutes(min)
-        },
-        serialTime () {
-            let min = this.serialSeason * this.serialSeries * this.serialSeriesMinutes
-            return this.getHoursAndMinutes(min)
-        }
-    } 
+    newTask () {
+      if (this.taskTitle === '') {
+        return
+      }
+      let time
+      if (this.whatWhatch === 'Film') {
+        time = this.filmTime
+      } else {
+        time = this.serialTime
+      }
+      const task = {
+        title: this.taskTitle,
+        description: this.taskDescription,
+        whatWhatch: this.whatWhatch,
+        time,
+        tags: this.tags,
+        completed: false,
+        editing: false
+      }
+      this.$store.dispatch('newTask', task)
+      console.log(task)
+
+      // Reset
+      this.taskTitle = ''
+      this.taskDescription = ''
+      this.tagsUsed = []
+
+      for (let i = 0; i < this.tags.length; i++) {
+        this.tags[i].use = false
+      }
+    },
+    addTagUsed (tag) {
+      tag.use = !tag.use
+      if (tag.use) {
+        this.tagsUsed.push({
+          title: tag.title
+        })
+      } else {
+        this.tagsUsed.splice(tag.title, 1)
+      }
+    },
+    getHoursAndMinutes (minutes) {
+      let hours = Math.trunc(minutes / 60)
+      let min = minutes % 60
+      return hours + ' Hours ' + min + ' Minutes'
+    }
+  },
+  computed: {
+    tags () {
+      return this.$store.getters.tags
+    },
+    filmTime () {
+      let min = (this.filmHours * 60) + (this.filmMinutes * 1)
+      return this.getHoursAndMinutes(min)
+    },
+    serialTime () {
+      let min = this.serialSeason * this.serialSeries * this.serialSeriesMinutes
+      return this.getHoursAndMinutes(min)
+    }
+  }
 }
 </script>
 
 <style lang="stylus" scoped>
 // Options
-    .option-list
-        display flex
-        align-items center
-        margin-bottom 20px
-        .what-watch--radio
-            margin-right 12px
-        input
-            margin-bottom 0
-        label
-            margin-right 20px
-            margin-bottom 0
-            &:last-child
-                margin-right 0
-    // Total time
-    .total-time
-        margin-bottom 20px
-    .time-title
-        display block
-        margin-bottom 6px
-    .time-input
-        max-width 80px
-        margin-right 10px
+.option-list
+  display flex
+  align-items center
+  margin-bottom 20px
+  .what-watch--radio
+    margin-right 12px
+  input
+    margin-bottom 0
+  label
+    margin-right 20px
+    margin-bottom 0
+    &:last-child
+      margin-right 0
+// Total time
+.total-time
+  margin-bottom 20px
+.time-title
+  display block
+  margin-bottom 6px
+.time-input
+  max-width 80px
+  margin-right 10px
 
-    .time-input
-        max-width 80px
-        margin-right 10px
-    
-    // Tags
-    .tag-list
-        margin-bottom 20px
+// Tags
+.tag-list
+  margin-bottom 20px
 
-    .ui-tag__wrapper
-        margin-right 18px
-        margin-bottom 10px
-        &:last-child
-            margin-right 0
+.ui-tag__wrapper
+  margin-right 18px
+  margin-bottom 10px
+  &:last-child
+    margin-right 0
 
-    .ui-tag
-        .button-close
-            &.active
-                transform: rotate(45deg)
-        &.used
-            background-color: #444ce0
-            color #fff
-            .button-close
-                &:before,
-                &:after
-                    background-color #fff
-    // Tag Menu Show
-    .tag-list--menu
-        display flex
-        justify-content space-between
-        align-items center
-    // New Tag Input
-    .tag-add--input
-        margin-bottom 0
-        margin-right 10px
-        height 42px
-    // Total Time
-    .total-time
-        p
-            margin-bottom 6px
-        span
-            margin-right 16px
-        .task-input
-            max-width 80px
-            margin-bottom 28px
-            margin-right 10px
-        
-    .button-list
-            display flex
-            justify-content flex-end
+.ui-tag
+  .button-close
+    &.active
+      transform: rotate(45deg)
+  &.used
+    background-color: #444ce0
+    color #fff
+    .button-close
+      &:before,
+      &:after
+        background-color #fff
+// Tag Menu Show
+.tag-list--menu
+  display flex
+  justify-content space-between
+  align-items center
+// New Tag Input
+.tag-add--input
+  margin-bottom 0
+  margin-right 10px
+  height 42px
+// Total Time
+.total-time
+  p
+    margin-bottom 6px
+  span
+    margin-right 16px
+  .task-input
+    max-width 80px
+    margin-bottom 28px
+    margin-right 10px
+.button-list
+      display flex
+      justify-content flex-end
 </style>
