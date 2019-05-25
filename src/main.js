@@ -2,12 +2,18 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
+import Uimini from 'uimini/dist/css/uimini.css'
+import VAnimateCss from 'v-animate-css'
 
 import App from './App'
 import router from './router'
 import store from './store'
 
-Vue.use(Vuelidate)
+Vue.use(
+  Vuelidate,
+  Uimini,
+  VAnimateCss
+)
 
 Vue.config.productionTip = false
 
